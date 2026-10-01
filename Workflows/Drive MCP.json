@@ -1,0 +1,254 @@
+{
+  "name": "Drive MCP",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "de17b67f-2b4c-46d9-89d4-cc43440d83f9",
+        "instructions": "You are a Google Drive productivity MCP server.\n\nProvide Google Drive tools that allow the AI Agent to search for, retrieve, and read files from the user's Google Drive.\n\nUse the available Google Drive tools for:\n- Searching files\n- Finding files by name or keyword\n- Retrieving file information\n- Reading file contents when supported\n- Listing relevant files\n\nWhen searching for files, return useful information including the file name, file ID, MIME type, modified date, and other available metadata.\n\nWhen the AI Agent needs to retrieve or read a specific file, use the file ID returned by a previous search instead of inventing a file ID.\n\nDo not invent files, file IDs, file contents, or metadata.\n\nUse Google Drive tools whenever the user's request involves finding, retrieving, or reading documents or other files stored in Google Drive."
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        128,
+        0
+      ],
+      "id": "6987e23f-bdfc-4e72-9293-fa24c0ab1062",
+      "name": "Drive MCP Server Trigger",
+      "webhookId": "de17b67f-2b4c-46d9-89d4-cc43440d83f9"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        -160,
+        224
+      ],
+      "id": "39837581-a76b-439f-95cb-8b4bf28b1206",
+      "name": "Upload file in Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OTjtCnLTDkELT6Si",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('File', ``, 'string') }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        16,
+        224
+      ],
+      "id": "0e33bea4-4777-4301-b6e0-b0b913ed92e3",
+      "name": "Download file in Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OTjtCnLTDkELT6Si",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Search Google Drive for files using a name or keyword. Return matching files with their file names, IDs, MIME types, and available metadata.",
+        "resource": "fileFolder",
+        "queryString": "={{ $fromAI('query', 'The name or keyword to search for in Google Drive') }}",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        160,
+        224
+      ],
+      "id": "da3e9ace-5ba5-489a-b0f2-1f9bd9af6928",
+      "name": "Search files and folders in Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OTjtCnLTDkELT6Si",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "drive",
+        "operation": "get",
+        "driveId": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Shared_Drive', ``, 'string') }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        320,
+        224
+      ],
+      "id": "a304fb78-0920-4ad5-a7f1-cec106525f86",
+      "name": "Get shared drive in Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OTjtCnLTDkELT6Si",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "drive",
+        "operation": "list",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        480,
+        224
+      ],
+      "id": "59e63204-cb55-4a4c-a5c6-b34d0c0497ca",
+      "name": "Get many shared drives in Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OTjtCnLTDkELT6Si",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "drive",
+        "operation": "update",
+        "driveId": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Shared_Drive', ``, 'string') }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        656,
+        224
+      ],
+      "id": "71e7527d-99df-4a66-beed-e957f2a999e8",
+      "name": "Update shared drive in Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OTjtCnLTDkELT6Si",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Upload file in Google Drive": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file in Google Drive": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders in Google Drive": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get shared drive in Google Drive": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many shared drives in Google Drive": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update shared drive in Google Drive": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "babce30d-c7a4-4f42-bbb3-da470752b784",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "81766d8824662db29d014494c967fe86d12bf8cb0db3b9090901ec14e25ab153"
+  },
+  "nodeGroups": [],
+  "id": "7pSdTQeey7v5H5tw",
+  "tags": []
+}

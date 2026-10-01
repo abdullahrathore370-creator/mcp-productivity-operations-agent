@@ -1,0 +1,224 @@
+{
+  "name": "Calendar",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "41020850-a520-4874-8e5b-8bda0f3f0aed"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        0
+      ],
+      "id": "9d1e8e9c-9831-4771-b7d8-e2e01010f0f6",
+      "name": "MCP Server Trigger",
+      "webhookId": "41020850-a520-4874-8e5b-8bda0f3f0aed"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this tool to retrieve the user's Google Calendar events. Use it when the user asks about their schedule, meetings, appointments, events, or availability.",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "abdullahrathore370@gmail.com",
+          "mode": "list",
+          "cachedResultName": "abdullahrathore370@gmail.com"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -16,
+        240
+      ],
+      "id": "7bb3fd65-ba73-4209-9a8d-416a0cf6dee9",
+      "name": "Get many events in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "TMWHmqQdxJxLiium",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "abdullahrathore370@gmail.com",
+          "mode": "list",
+          "cachedResultName": "abdullahrathore370@gmail.com"
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        144,
+        240
+      ],
+      "id": "289508ce-f2e8-4fe0-974f-d6f15982d9d0",
+      "name": "Create an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "TMWHmqQdxJxLiium",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "abdullahrathore370@gmail.com",
+          "mode": "list",
+          "cachedResultName": "abdullahrathore370@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', `The ID of the calendar event`, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        240
+      ],
+      "id": "e6026f81-ec95-45c4-a23d-c6984b52768a",
+      "name": "Delete an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "TMWHmqQdxJxLiium",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "calendar": {
+          "__rl": true,
+          "value": "abdullahrathore370@gmail.com",
+          "mode": "list",
+          "cachedResultName": "abdullahrathore370@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        464,
+        240
+      ],
+      "id": "d408a45e-3679-4cae-8486-3b771e731f58",
+      "name": "Get an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "TMWHmqQdxJxLiium",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "abdullahrathore370@gmail.com",
+          "mode": "list",
+          "cachedResultName": "abdullahrathore370@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', `The ID of the calendar event`, 'string') }}",
+        "updateFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        240
+      ],
+      "id": "e103b7cd-bf0d-488d-b3b2-d37f62c56043",
+      "name": "Update an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "TMWHmqQdxJxLiium",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get many events in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ff044492-1ee4-48a3-81ea-018949433f89",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "81766d8824662db29d014494c967fe86d12bf8cb0db3b9090901ec14e25ab153"
+  },
+  "nodeGroups": [],
+  "id": "oVfMJVhgIeDOy8IX",
+  "tags": []
+}

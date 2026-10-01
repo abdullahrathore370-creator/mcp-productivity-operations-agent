@@ -1,0 +1,206 @@
+{
+  "name": "Gmail MCP",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "f1928ede-af9a-4f52-9580-2fe5172f1349",
+        "instructions": "You are a Gmail productivity MCP server.\n\nProvide Gmail tools that allow the AI Agent to manage and retrieve information from the user's Gmail account.\n\nUse the available Gmail tools for:\n- Searching emails\n- Reading emails\n- Retrieving email threads\n- Finding emails by sender, subject, keyword, or date\n- Drafting emails\n- Sending emails\n\nWhen searching emails, return the information needed by the AI Agent to identify the relevant messages, including sender, recipient, subject, date, message ID, thread ID, and message content when available.\n\nWhen the AI Agent needs to read or retrieve a specific email, use the appropriate email ID or thread ID obtained from a previous search instead of inventing an ID.\n\nWhen drafting an email, use the user's requested recipient, subject, and content.\n\nWhen sending an email, send exactly what the AI Agent has requested and report the result.\n\nDo not invent emails, message IDs, thread IDs, recipients, subjects, or email content.\n\nUse Gmail tools whenever the user's request involves searching, reading, summarizing, drafting, or sending emails."
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        0
+      ],
+      "id": "d0192ae4-7dd8-4765-9a67-df5a6e986c78",
+      "name": "Gmail MCP Server Trigger",
+      "webhookId": "f1928ede-af9a-4f52-9580-2fe5172f1349"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Send a message in GmailSend an email to a specified recipient with the provided subject and message.",
+        "sendTo": "={{ $fromAI('to', 'The recipient email address') }}",
+        "subject": "={{ $fromAI('subject', 'The email subject') }}",
+        "emailType": "text",
+        "message": "={{ $fromAI('message', 'The complete email message to send') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        -16,
+        240
+      ],
+      "id": "23e9f9bf-02a4-465b-a58e-46ef85d78fd9",
+      "name": "Send a message in Gmail",
+      "webhookId": "1049b009-cb08-4841-be7e-f357abd89360",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pim5eI1IiUJXd50l",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "{{ $fromAI('messageId', 'The Gmail message ID to retrieve') }}"
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        240
+      ],
+      "id": "2e542cc1-6be3-4f5d-95b2-8473743389e0",
+      "name": "Get a message in Gmail",
+      "webhookId": "8a377f05-da02-4ad3-b838-ba1cdb5adb80",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pim5eI1IiUJXd50l",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Search the user's Gmail messages and return matching emails. Use this tool when the user asks to find, search, or locate emails.",
+        "operation": "getAll",
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        304,
+        240
+      ],
+      "id": "759658ff-8f57-47b3-ad82-35875926ea0c",
+      "name": "Get many messages in Gmail",
+      "webhookId": "903493f4-db1c-4b10-900a-c73b3a6ba67c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pim5eI1IiUJXd50l",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        240
+      ],
+      "id": "ad4116cd-fb05-4d87-8f8b-4338416973bb",
+      "name": "Delete a message in Gmail",
+      "webhookId": "9ef45b15-b605-4c9d-a621-a887d00ba404",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pim5eI1IiUJXd50l",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        240
+      ],
+      "id": "d955ca4b-7caf-46d6-b616-586bec4b9ffd",
+      "name": "Reply to a message in Gmail",
+      "webhookId": "f8222dd0-d6cd-4216-955e-2de77897aebe",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pim5eI1IiUJXd50l",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gmail MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gmail MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gmail MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gmail MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply to a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gmail MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2cc90eda-d8b0-4d0b-b44a-4373fd30db13",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "81766d8824662db29d014494c967fe86d12bf8cb0db3b9090901ec14e25ab153"
+  },
+  "nodeGroups": [],
+  "id": "upMeVS808Uwugvxs",
+  "tags": []
+}

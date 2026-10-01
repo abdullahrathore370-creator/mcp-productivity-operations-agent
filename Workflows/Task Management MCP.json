@@ -1,0 +1,197 @@
+{
+  "name": "Task Management MCP",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "b3f86412-380a-4203-8c75-90239281bcd4",
+        "instructions": "You are a Google Tasks productivity MCP server.\n\nProvide tools that allow the AI Agent to manage the user's Google Tasks.\n\nSupport:\n- Creating tasks\n- Listing tasks\n- Searching tasks\n- Updating tasks\n- Completing tasks\n- Deleting tasks\n\nUse Google Tasks for all task-management operations.\n\nNever invent task IDs or task data. Use task IDs returned by previous operations."
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        0
+      ],
+      "id": "d2e92d73-9242-4481-a6c2-e85e1869178f",
+      "name": "MCP Server Trigger",
+      "webhookId": "b3f86412-380a-4203-8c75-90239281bcd4"
+    },
+    {
+      "parameters": {
+        "task": "MDIxMzQ0ODY3NTMwNjE2OTM0NDY6MDow",
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        240
+      ],
+      "id": "7d85ff66-fa34-4792-987b-a08d1c947719",
+      "name": "Create a task in Google Tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "h3trRzDJeZBQRtFT",
+          "name": "Google Tasks account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "task": "MDIxMzQ0ODY3NTMwNjE2OTM0NDY6MDow",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        96,
+        240
+      ],
+      "id": "6e2bec54-f098-4e91-8c93-2c7a9973fcd2",
+      "name": "Get many tasks in Google Tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "h3trRzDJeZBQRtFT",
+          "name": "Google Tasks account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "task": "MDIxMzQ0ODY3NTMwNjE2OTM0NDY6MDow",
+        "taskId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Task_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        224,
+        240
+      ],
+      "id": "b4951a03-c762-46c5-a8c2-1fa209c0340b",
+      "name": "Delete a task in Google Tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "h3trRzDJeZBQRtFT",
+          "name": "Google Tasks account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "task": "MDIxMzQ0ODY3NTMwNjE2OTM0NDY6MDow",
+        "taskId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Task_ID', ``, 'string') }}",
+        "updateFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        352,
+        240
+      ],
+      "id": "ac4511a5-57a8-4656-9380-d543388a21a8",
+      "name": "Update a task in Google Tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "h3trRzDJeZBQRtFT",
+          "name": "Google Tasks account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "task": "MDIxMzQ0ODY3NTMwNjE2OTM0NDY6MDow",
+        "taskId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Task_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        480,
+        240
+      ],
+      "id": "dc962449-5125-4eb7-8f34-2fd9823d82db",
+      "name": "Get a task in Google Tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "h3trRzDJeZBQRtFT",
+          "name": "Google Tasks account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Create a task in Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many tasks in Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a task in Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a task in Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a task in Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d1e65889-7fd1-4634-92e0-7297a867a909",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "81766d8824662db29d014494c967fe86d12bf8cb0db3b9090901ec14e25ab153"
+  },
+  "nodeGroups": [],
+  "id": "18u45HjJGiR2OuH0",
+  "tags": []
+}

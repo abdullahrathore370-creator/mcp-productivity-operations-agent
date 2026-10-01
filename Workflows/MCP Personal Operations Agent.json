@@ -1,0 +1,262 @@
+{
+  "name": "MCP Personal Operations Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        608,
+        0
+      ],
+      "id": "fdbc1d55-cedb-4b37-8375-ce34b79b1127",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.1-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        368,
+        240
+      ],
+      "id": "346b2486-60ac-4a16-a96d-20cdbf76c19b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionId || $json.chatId || 'default-session' }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        496,
+        240
+      ],
+      "id": "e32ec38e-7f3b-410e-93d4-3dfeb625ccf2",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://abdullah370.app.n8n.cloud/mcp/f1928ede-af9a-4f52-9580-2fe5172f1349",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.4,
+      "position": [
+        752,
+        224
+      ],
+      "id": "58383b40-9e8c-4e99-b0c0-991ce3f9538e",
+      "name": "Gmail MCP"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://abdullah370.app.n8n.cloud/mcp/de17b67f-2b4c-46d9-89d4-cc43440d83f9",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.4,
+      "position": [
+        880,
+        224
+      ],
+      "id": "0c3e1e8d-d418-47c7-a613-b2078fbbabbd",
+      "name": "Google Drive MCP Client"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://abdullah370.app.n8n.cloud/mcp/41020850-a520-4874-8e5b-8bda0f3f0aed",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.4,
+      "position": [
+        1024,
+        224
+      ],
+      "id": "44a35fd0-7255-4d0d-812b-48ba06264103",
+      "name": "Google Calendar MCP Client"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://abdullah370.app.n8n.cloud/mcp/b3f86412-380a-4203-8c75-90239281bcd4",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.4,
+      "position": [
+        1184,
+        224
+      ],
+      "id": "66bab876-708a-49c8-95f6-f9dea2f731f7",
+      "name": "Task Manager MCP"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dff1b8f5-7c83-43e0-ae8a-b4bf203209df",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        0
+      ],
+      "id": "44779ac9-d093-4391-9710-fef42b88ca3b",
+      "name": "Webhook",
+      "webhookId": "dff1b8f5-7c83-43e0-ae8a-b4bf203209df"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $('AI Agent').item.json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1200,
+        0
+      ],
+      "id": "bbdbb4b7-5f61-41fb-b66b-ac67c566fdcd",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "content": "MCP Client tools\n",
+        "height": 224,
+        "width": 592
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        160
+      ],
+      "typeVersion": 1,
+      "id": "9c160c41-a41d-4d34-b8ad-776786d65277",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail MCP": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Task Manager MCP": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6133280c-b972-4f99-a1ac-dbf0a41aa315",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "81766d8824662db29d014494c967fe86d12bf8cb0db3b9090901ec14e25ab153"
+  },
+  "nodeGroups": [],
+  "id": "uWjxeuc1XOL7huMy",
+  "tags": []
+}
